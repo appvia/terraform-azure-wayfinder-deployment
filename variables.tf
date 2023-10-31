@@ -140,8 +140,8 @@ variable "wayfinder_idp_details" {
   description = "The IDP details to use for Wayfinder to enable SSO."
   type = object({
     type          = string
-    clientId      = string
-    clientSecret  = string
+    clientId      = optional(string)
+    clientSecret  = optional(string)
     serverUrl     = optional(string)
     azureTenantId = optional(string)
   })
@@ -149,12 +149,12 @@ variable "wayfinder_idp_details" {
   sensitive = true
 
   validation {
-    condition     = contains(["generic", "aad"], var.wayfinder_idp_details["type"])
-    error_message = "wayfinder_idp_details[\"type\"] must be one of: generic, aad"
+    condition     = contains(["generic", "aad", "none"], var.wayfinder_idp_details["type"])
+    error_message = "wayfinder_idp_details[\"type\"] must be one of: generic, aad, none"
   }
 
   validation {
-    condition     = (var.wayfinder_idp_details["type"] == "generic" && length(var.wayfinder_idp_details["serverUrl"]) > 0) || (var.wayfinder_idp_details["type"] == "aad" && length(var.wayfinder_idp_details["azureTenantId"]) > 0)
+    condition     = var.wayfinder_idp_details["type"] == "none" || (var.wayfinder_idp_details["type"] == "generic" && length(var.wayfinder_idp_details["serverUrl"]) > 0) || (var.wayfinder_idp_details["type"] == "aad" && length(var.wayfinder_idp_details["azureTenantId"]) > 0)
     error_message = "serverUrl must be set if IDP type is generic, azureTenantId must be set if IDP type is aad"
   }
 
