@@ -1,0 +1,35 @@
+name: Terraform
+on:
+  push:
+    branches:
+    - main
+    - feature/*
+    - release/*
+  workflow_dispatch:
+
+jobs:
+  root-module-validation:
+    uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-module-validation.yml@main
+    name: Root Module Validation
+
+  cloudaccess-module-validation:
+    uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-module-validation.yml@main
+    name: Cloud Access Module Validation
+    with:
+      working-directory: modules/cloudaccess
+
+  test:
+    name: Terraform Unit Tests
+    runs-on: ubuntu-latest
+    environment: ci
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run Terraform init
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_USE_MSI: true
+      run: |
+        terraform init
+        terraform test
