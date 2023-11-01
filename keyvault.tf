@@ -1,11 +1,12 @@
 resource "random_id" "kv" {
+  count                         = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
   byte_length = 2
 }
 
 resource "azurerm_key_vault" "kv" {
   count                         = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
   location                      = var.location
-  name                          = format("kv-wayfinder-ca-%s", random_id.kv.hex)
+  name                          = format("kv-wayfinder-ca-%s", random_id.kv[0].hex)
   resource_group_name           = var.resource_group_name
   sku_name                      = "premium"
   tenant_id                     = data.azurerm_subscription.current.tenant_id
