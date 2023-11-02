@@ -1,13 +1,15 @@
 content: |-
-  # Example: Complete (includes pre-configured Wayfinder SSO)
+  # Wayfinder Terraform Deployment for Azure
 
   ## Deployment
 
-  1. Create a Resource Group for Wayfinder to be installed within.
-  2. Create a DNS Zone in Azure and ensure the domain is delegated to the Azure DNS nameservers.
-  3. Copy the `terraform.tfvars.example` file to `terraform.tfvars` and update with your values.
-  4. Run `terraform init -upgrade`
-  5. Run `terraform apply`
+  1. Clone this repository
+  2. Define tfvars file - use test.*.tftest.hcl files as a reference for example values
+  3. Execute terrform (init, apply)
+
+  ## Examples
+  An example workflow (GitHub Workflow and Azure DevOps Pipeline examples) can be found in the 
+  [examples](./examples) directory as well as an example tfvars file.
 
   ## Updating Docs
 
