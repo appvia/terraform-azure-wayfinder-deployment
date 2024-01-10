@@ -4,7 +4,7 @@
 ## Deployment
 
 1. Clone this repository
-2. Define tfvars file - use test.*.tftest.hcl files as a reference for example values
+2. Define tfvars file - use example.*.tftest.hcl files as a reference for example values
 3. Execute terrform (init, apply)
 
 ## Examples
