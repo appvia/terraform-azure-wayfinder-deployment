@@ -29,7 +29,7 @@ locals {
 }
 
 module "wayfinder" {
-  source = "github.com/appvia/terraform-azurerm-wayfinder?ref=vnext"
+  source = "github.com/appvia/terraform-azurerm-wayfinder?ref=v2.5.1-tf.2"
 
   ### ALWAYS USE local.wayfinder_config INSTEAD OF SETTING THESE VARIABLES DIRECTLY (SO THEY CAN BE TESTED) ###
   aks_api_server_authorized_ip_ranges = local.wayfinder_config.aks_api_server_authorized_ip_ranges
